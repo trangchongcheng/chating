@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@blox3/infra-exception": [
+        "libs/infra-exception/src"
+      ],
+      "@blox3/infra-exception/*": [
+        "libs/infra-exception/src/*"
+      ],
+      "@blox3/infra-exception/exception": [
+        "libs/infra-exception/src/exception"
+      ],
+      "@blox3/infra-auth": [
+        "libs/infra-auth/src"
+      ],
+      "@blox3/infra-auth/*": [
+        "libs/infra-auth/src/*"
+      ],
+      "@blox3/infra-common": [
+        "libs/infra-common/src"
+      ],
+      "@blox3/infra-common/*": [
+        "libs/infra-common/src/*"
+      ],
+      "@blox3/infra-modules": [
+        "libs/infra-modules/src"
+      ],
+      "@blox3/infra-modules/*": [
+        "libs/infra-modules/src/*"
+      ]
+    }
+  }
+}
