@@ -1,3 +1,4 @@
+// import { MessageType } from 'database/enums';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Room } from './room.entity';
@@ -7,6 +8,9 @@ import { User } from './user.entity';
 export class Message extends BaseEntity {
   @Column({ type: 'varchar' })
   message: string;
+
+  // @Column({ type: 'enum', enum: MessageType, default: MessageType.TEXT })
+  // type: MessageType;
 
   @PrimaryColumn({ type: 'varchar' })
   userId: string;

@@ -1,4 +1,10 @@
-import { WebSocketGateway, SubscribeMessage, WebSocketServer } from '@nestjs/websockets';
+import {
+  WebSocketGateway,
+  SubscribeMessage,
+  WebSocketServer,
+  ConnectedSocket,
+  MessageBody,
+} from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { UseGuards } from '@nestjs/common';
 import { SocketEvent } from 'src/common/constants/chat-event';
@@ -21,7 +27,7 @@ export class ChatGateway {
     private messageService: MessageService,
   ) {}
 
-  async handleConnection(client: SocketWithAuth): Promise<void> {
+  async handleConnection(@ConnectedSocket() client: SocketWithAuth): Promise<void> {
     try {
       await this.chatService.setUserOnline(client.user.id);
     } catch (error: any) {
@@ -30,18 +36,25 @@ export class ChatGateway {
   }
 
   @SubscribeMessage(SocketEvent.NEW_MESSAGE)
-  async create(client: SocketWithAuth, payload: ChatPayloadDto): Promise<void> {
+  async create(
+    @ConnectedSocket() client: SocketWithAuth,
+    @MessageBody() payload: ChatPayloadDto,
+  ): Promise<any> {
     await this.messageService.saveMessage(client.user, payload);
     this.server
       .to(payload.roomId)
       .emit(SocketEvent.NEW_MESSAGE_RECEIVED, { message: payload.message, user: client.user });
+    return { status: 'ok' };
   }
 
   @SubscribeMessage(SocketEvent.JOINING)
-  async handleJoinRoom(client: SocketWithAuth, payload: JoinRoomPayloadDto): Promise<void> {
+  async handleJoinRoom(
+    @ConnectedSocket() client: SocketWithAuth,
+    @MessageBody() payload: JoinRoomPayloadDto,
+  ): Promise<void> {
     const room = await this.roomService.createRoomIfNotExits(payload, client.user);
     await client.join(room.id);
-    client.emit(SocketEvent.JOINED, room);
+    this.server.to(room.id).emit(SocketEvent.JOINED, room);
   }
 
   @SubscribeMessage(SocketEvent.LEAVE)
@@ -49,7 +62,7 @@ export class ChatGateway {
     client.leave(payload.roomId);
   }
 
-  async handleDisconnect(client: SocketWithAuth): Promise<void> {
+  async handleDisconnect(@ConnectedSocket() client: SocketWithAuth): Promise<void> {
     try {
       await this.chatService.setUserOffline(client.user.id);
     } catch (error: any) {

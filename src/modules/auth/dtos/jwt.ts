@@ -2,7 +2,7 @@ import { User } from 'database/entities';
 import { Socket } from 'socket.io';
 
 export interface IJwtPayload {
-  sub: string;
+  id: string;
   walletAddress: string;
 }
 

@@ -9,10 +9,10 @@ import { MessageService } from './message.service';
 export class MessageController {
   constructor(private readonly messageService: MessageService) {}
 
-  @Get('/:room')
+  @Get('/:roomId')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ status: HttpStatus.OK, type: MessageResponse })
-  async rooms(@Param('id') roomId: string): Promise<Message[]> {
+  async rooms(@Param('roomId') roomId: string): Promise<Message[]> {
     return this.messageService.getMessageByRoom(roomId);
   }
 }

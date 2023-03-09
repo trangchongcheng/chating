@@ -64,7 +64,7 @@ async function bootstrap(): Promise<void> {
       .setDescription(pkgDesc)
       .setVersion(pkgVersion)
       .addServer(MainModule.apiPrefix)
-      .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'refresh-token')
+      .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'access-token')
       .build();
     const customOptions: SwaggerCustomOptions = {
       swaggerOptions: {

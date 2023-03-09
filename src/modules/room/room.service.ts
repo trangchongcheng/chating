@@ -19,18 +19,18 @@ export class RoomService {
   }
 
   async createRoomIfNotExits(payload: JoinRoomPayloadDto, user: User): Promise<Room> {
-    const { message, ...rest } = payload;
-    if (!payload.roomId) {
+    const { ...rest } = payload;
+    if (!payload.id) {
       return this.create({
         ...rest,
         roomName: `Room created by ${payload.fromWalletAddress}`,
         createdBy: user.id,
       });
     }
-    return this.isMembemOfRoom(payload.roomId, payload.fromWalletAddress);
+    return this.isMemberOfRoom(payload.id, payload.fromWalletAddress);
   }
 
-  async isMembemOfRoom(roomId: string, walletAddress: string): Promise<Room> {
+  async isMemberOfRoom(roomId: string, walletAddress: string): Promise<Room> {
     const room = await this.roomRepository
       .createQueryBuilder('room')
       .where('room.id = :id', { id: roomId })
@@ -42,6 +42,12 @@ export class RoomService {
 
     if (!room) throw new EzWalletNotFoundException('You are not a member of this group');
     return room;
+  }
+
+  async myRoom(walletAddress: string): Promise<Room[]> {
+    return this.roomRepository.find({
+      where: [{ fromWalletAddress: walletAddress }, { toWalletAddress: walletAddress }],
+    });
   }
 
   async rooms(): Promise<Room[]> {

@@ -20,7 +20,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       secretOrKey: authConfig.jwtSecret,
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: any): string | null => {
-          const accessToken = request?.handshake?.headers?.authorization || '';
+          const accessToken =
+            request?.handshake?.headers?.authorization ||
+            request?.headers?.authorization?.split(' ')[1];
           if (!accessToken) {
             return null;
           }
@@ -34,7 +36,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     if (!payload) {
       throw new EzWalletUnauthorizedException('Unauthorized');
     }
-    const user = await this.authService.validateUserById(payload.sub);
+    const user = await this.authService.validateUserById(payload.id);
     return user;
   }
 }

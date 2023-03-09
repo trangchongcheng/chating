@@ -7,7 +7,7 @@ function encrypt(data: string, key: string): string {
   return encryptedData.toString();
 }
 const code = encrypt(
-  '0xA39632B1621c8De98Dc097720D154bE36C254DEA',
+  '0xae92f3b47da60a57dea94970f5a8168405d31275',
   process.env.CRYPTO_PRIVATE_KEY || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456',
 );
 console.log(code);

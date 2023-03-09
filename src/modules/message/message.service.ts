@@ -20,7 +20,7 @@ export class MessageService {
   }
 
   async saveMessage(user: User, createMessageDto: CreateMessageDto): Promise<void> {
-    await this.roomService.isMembemOfRoom(createMessageDto.roomId, user.walletAddress);
+    await this.roomService.isMemberOfRoom(createMessageDto.roomId, user.walletAddress);
     const message = await this.messageRepository.create({ ...createMessageDto, userId: user.id });
     this.messageRepository.insert(message);
   }
