@@ -1062,6 +1062,15 @@
   dependencies:
     "@sinonjs/commons" "^2.0.0"
 
+"@socket.io/admin-ui@^0.5.1":
+  "integrity" "sha512-1dlGL2FGm6T+uL1e6iDvbo2eCINwvW7iVbjIblwh5kPPRM1SP8lmZrbFZf4QNJ/cqQ+JLcx49eXGM9WAB4TK7w=="
+  "resolved" "https://registry.npmjs.org/@socket.io/admin-ui/-/admin-ui-0.5.1.tgz"
+  "version" "0.5.1"
+  dependencies:
+    "@types/bcryptjs" "^2.4.2"
+    "bcryptjs" "^2.4.3"
+    "debug" "~4.3.1"
+
 "@socket.io/component-emitter@~3.1.0":
   "integrity" "sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg=="
   "resolved" "https://registry.npmjs.org/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz"
@@ -1145,6 +1154,11 @@
   "version" "5.0.0"
   dependencies:
     "@types/node" "*"
+
+"@types/bcryptjs@^2.4.2":
+  "integrity" "sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ=="
+  "resolved" "https://registry.npmjs.org/@types/bcryptjs/-/bcryptjs-2.4.2.tgz"
+  "version" "2.4.2"
 
 "@types/body-parser@*":
   "integrity" "sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g=="
@@ -2047,6 +2061,11 @@
   dependencies:
     "@mapbox/node-pre-gyp" "^1.0.10"
     "node-addon-api" "^5.0.0"
+
+"bcryptjs@^2.4.3":
+  "integrity" "sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ=="
+  "resolved" "https://registry.npmjs.org/bcryptjs/-/bcryptjs-2.4.3.tgz"
+  "version" "2.4.3"
 
 "binary-extensions@^2.0.0":
   "integrity" "sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA=="
@@ -7500,7 +7519,7 @@
     "@socket.io/component-emitter" "~3.1.0"
     "debug" "~4.3.1"
 
-"socket.io@^4.6.1":
+"socket.io@^4.6.1", "socket.io@>=3.1.0":
   "integrity" "sha512-KMcaAi4l/8+xEjkRICl6ak8ySoxsYG+gG6/XfRCPJPQ/haCRIJBTL4wIl8YCsmtaBovcAXGLOShyVWQ/FG8GZA=="
   "resolved" "https://registry.npmjs.org/socket.io/-/socket.io-4.6.1.tgz"
   "version" "4.6.1"
