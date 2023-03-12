@@ -5,11 +5,13 @@ import { createClient } from 'redis';
 import { JwtService } from '@nestjs/jwt';
 import { SocketWithAuth } from 'src/modules/auth/dtos';
 import { INestApplicationContext, Logger } from '@nestjs/common';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { instrument } from '@socket.io/admin-ui';
 
 export class RedisIoAdapter extends IoAdapter {
   private readonly logger = new Logger(RedisIoAdapter.name);
 
-  constructor(private app: INestApplicationContext) {
+  constructor(private app: INestApplicationContext, private corsOrigin: (string | RegExp)[]) {
     super(app);
   }
 
@@ -25,10 +27,23 @@ export class RedisIoAdapter extends IoAdapter {
   }
 
   createIOServer(port: number, options?: ServerOptions): any {
-    const server = super.createIOServer(port, options);
+    const optionsWithCORS = {
+      ...options,
+      cors: {
+        origin: this.corsOrigin,
+        methods: ['GET', 'POST'],
+        credentials: true,
+      },
+    };
+    const server = super.createIOServer(port, optionsWithCORS);
     server.adapter(this.adapterConstructor);
     const jwtService = this.app.get(JwtService);
     server.use(this.createTokenMiddleware(jwtService, this.logger));
+
+    instrument(server, {
+      auth: false,
+      mode: 'development',
+    });
 
     return server;
   }

@@ -8,7 +8,6 @@ import {
 import { Server, Socket } from 'socket.io';
 import { UseGuards } from '@nestjs/common';
 import { SocketEvent } from 'src/common/constants/chat-event';
-import { instrument } from '@socket.io/admin-ui';
 import { ChatService } from './chat.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ChatPayloadDto, JoinRoomPayloadDto } from './dto';
@@ -16,7 +15,7 @@ import { SocketWithAuth } from '../auth/dtos';
 import { RoomService } from '../room/room.service';
 import { MessageService } from '../message/message.service';
 
-@WebSocketGateway({ cors: { origin: ['https://admin.socket.io/', 'http://localhost:3000'] } })
+@WebSocketGateway({ cors: { origin: ['https://admin.socket.io', 'http://localhost:3000'] } })
 @UseGuards(JwtAuthGuard)
 export class ChatGateway {
   @WebSocketServer()
@@ -27,13 +26,6 @@ export class ChatGateway {
     private roomService: RoomService,
     private messageService: MessageService,
   ) {}
-
-  afterInit(): void {
-    instrument(this.server, {
-      auth: false,
-      mode: 'development',
-    });
-  }
 
   async handleConnection(@ConnectedSocket() client: SocketWithAuth): Promise<void> {
     try {

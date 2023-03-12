@@ -26,11 +26,6 @@ async function bootstrap(): Promise<void> {
   const isDev = process.env.NODE_ENV === 'development';
   const app = await NestFactory.create(MainModule);
 
-  // User Redis adapter:
-  const redisIoAdapter = new RedisIoAdapter(app);
-  await redisIoAdapter.connectToRedis();
-  app.useWebSocketAdapter(redisIoAdapter);
-
   // Disable security headers in development
   app.use(
     helmet(
@@ -57,6 +52,11 @@ async function bootstrap(): Promise<void> {
     origin: MainModule.corsOrigins,
   });
   app.setGlobalPrefix(MainModule.apiPrefix);
+
+  // User Redis adapter:
+  const redisIoAdapter = new RedisIoAdapter(app, MainModule.corsOrigins);
+  await redisIoAdapter.connectToRedis();
+  app.useWebSocketAdapter(redisIoAdapter);
 
   if (isDev) {
     const options = new DocumentBuilder()
