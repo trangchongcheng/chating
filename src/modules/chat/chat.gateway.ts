@@ -15,7 +15,7 @@ import { SocketWithAuth } from '../auth/dtos';
 import { RoomService } from '../room/room.service';
 import { MessageService } from '../message/message.service';
 
-@WebSocketGateway({ cors: true })
+@WebSocketGateway({ cors: { origin: ['https://admin.socket.io/', 'http://localhost:3000'] } })
 @UseGuards(JwtAuthGuard)
 export class ChatGateway {
   @WebSocketServer()
